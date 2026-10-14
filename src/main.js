@@ -8,7 +8,7 @@ if (window.ethereum) {
     web3 = new Web3(window.ethereum);
     try { 
         window.ethereum.enable();
-    } catch(e) {
+    } catch {
         console.error("User denied account access");
     }
 } else if (window.web3) {
