@@ -25,7 +25,7 @@ export default {
       try {
         // print message to console
         console.log('Resolving ENS name...');
-        const address = await this.$web3.eth.ens.getAddress(this.ensName);
+        const address = await this.$resolveEns(this.ensName);
         this.address = address;
         this.error = '';
       } catch (err) {

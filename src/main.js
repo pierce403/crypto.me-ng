@@ -1,25 +1,25 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import Web3 from 'web3';
+import { createEnsResolver } from './ens.mjs';
 
-let web3;
+let resolveEns;
 
 if (window.ethereum) {
-    web3 = new Web3(window.ethereum);
+    resolveEns = createEnsResolver(window.ethereum);
     try { 
         window.ethereum.enable();
     } catch {
         console.error("User denied account access");
     }
 } else if (window.web3) {
-    web3 = new Web3(window.web3.currentProvider);
+    resolveEns = createEnsResolver(window.web3.currentProvider);
 } else {
     console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
 }
 
 const app = createApp(App);
 
-// Make web3 available throughout your app
-app.config.globalProperties.$web3 = web3;
+// Share the ENS resolver without loading the Web3/Zod dependency chain.
+app.config.globalProperties.$resolveEns = resolveEns;
 
 app.mount('#app');
